@@ -66,142 +66,140 @@ require("lazy").setup({
     },
     {
         "hrsh7th/nvim-cmp",
+        dependencies = {
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-cmdline",
+            {
+            "L3MON4D3/LuaSnip",
+            version = "v2.*",
+            build = "make install_jsregexp",
+            config = function()
+                require("luasnip.loaders.from_vscode").lazy_load()
+            end,
+            },
+            "saadparwaiz1/cmp_luasnip",
+        },
         opts = function(_, opts)
             opts.sources = opts.sources or {}
             table.insert(opts.sources, {
-                name = "lazydev",
-                group_index = 0, -- skip LuaLS completions
+            name = "lazydev",
+            group_index = 0,
             })
         end,
-        dependencies = { 'hrsh7th/cmp-nvim-lsp',
-        {
-            "L3MON4D3/LuaSnip",
-            version = "v2.*", -- Latest release
-            build = "make install_jsregexp",
-            config = function() require("luasnip.loaders.from_vscode").lazy_load() end
-        },
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-path",
-        "hrsh7th/cmp-cmdline",
-        'saadparwaiz1/cmp_luasnip',
-        "quangnguyen30192/cmp-nvim-ultisnips",
-        "SirVer/ultisnips",
-        "hrsh7th/cmp-vsnip",
-        'hrsh7th/vim-vsnip',
+        config = function(_, opts)
+            require("cmp").setup(opts)
+        end,
     },
-    config = function()
-        require("lsp.cmp")
-    end
-},
-{
-    'windwp/nvim-autopairs',
-    event = "InsertEnter",
-    opts = {} 
-},
-{ 'saadparwaiz1/cmp_luasnip' },
-{ "lukas-reineke/indent-blankline.nvim" },
-{
-    'iamcco/markdown-preview.nvim',
-    build = 'cd app && yarn install'
-},
-{
-    'brenoprata10/nvim-highlight-colors',
-    config = function()
-        require("nvim-highlight-colors").setup({
-            render = 'background',
-            virtual_symbol = '■',
-            virtual_symbol_prefix = '',
-            virtual_symbol_suffix = ' ',
-            virtual_symbol_position = 'inline',
-            enable_hex = true,
-            enable_short_hex = true,
-            enable_rgb = true,
-            enable_hsl = true,
-            enable_ansi = true,
-            enable_xterm256 = true,
-            enable_xtermTrueColor = true,
-            enable_hsl_without_function = true,
-            enable_var_usage = true,
-            enable_named_colors = true,
-            enable_tailwind = false,
-            custom_colors = {
-                { label = '%-%-theme%-primary%-color', color = '#0f1219' },
-                { label = '%-%-theme%-secondary%-color', color = '#1f2937' },
-            }
-        })
-    end
-},
-{
-    "rcarriga/nvim-notify",
-    config = function()
-        require("notify").setup({
-            background_colour = "#000000",
-        })
-    end
-},
-{
-    "neovim/nvim-lspconfig",
-    dependencies = {
-        'williamboman/mason.nvim',
-        'williamboman/mason-lspconfig.nvim',
-        'j-hui/fidget.nvim',
-    }
-},
-{
-    'ojroques/vim-oscyank',
-    config = function()
-        vim.keymap.set('n', '<leader>c', '<Plug>OSCYankOperator')
-        vim.keymap.set('n', '<leader>cc', '<leader>c_', {remap = true})
-        vim.keymap.set('v', '<leader>c', '<Plug>OSCYankVisual')
-    end,
-},
-{
-    "pmizio/typescript-tools.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    opts = {},
-    config = function()
-        local mason_tsserver = vim.fn.stdpath("data")
-        .. "/mason/packages/typescript-language-server/node_modules/typescript/lib/tsserver.js"
+    {
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
+        opts = {} 
+    },
+    { "lukas-reineke/indent-blankline.nvim" },
+    {
+        'iamcco/markdown-preview.nvim',
+        build = 'cd app && yarn install'
+    },
+    {
+        'brenoprata10/nvim-highlight-colors',
+        config = function()
+            require("nvim-highlight-colors").setup({
+                render = 'background',
+                virtual_symbol = '■',
+                virtual_symbol_prefix = '',
+                virtual_symbol_suffix = ' ',
+                virtual_symbol_position = 'inline',
+                enable_hex = true,
+                enable_short_hex = true,
+                enable_rgb = true,
+                enable_hsl = true,
+                enable_ansi = true,
+                enable_xterm256 = true,
+                enable_xtermTrueColor = true,
+                enable_hsl_without_function = true,
+                enable_var_usage = true,
+                enable_named_colors = true,
+                enable_tailwind = false,
+                custom_colors = {
+                    { label = '%-%-theme%-primary%-color', color = '#0f1219' },
+                    { label = '%-%-theme%-secondary%-color', color = '#1f2937' },
+                }
+            })
+        end
+    },
+    {
+        "rcarriga/nvim-notify",
+        config = function()
+            require("notify").setup({
+                background_colour = "#000000",
+            })
+        end
+    },
+    {
+        "neovim/nvim-lspconfig",
+        dependencies = {
+            'williamboman/mason.nvim',
+            'williamboman/mason-lspconfig.nvim',
+            'j-hui/fidget.nvim',
+        }
+    },
+    {
+        'ojroques/vim-oscyank',
+        config = function()
+            vim.keymap.set('n', '<leader>c', '<Plug>OSCYankOperator')
+            vim.keymap.set('n', '<leader>cc', '<leader>c_', {remap = true})
+            vim.keymap.set('v', '<leader>c', '<Plug>OSCYankVisual')
+        end,
+    },
+    {
+        "pmizio/typescript-tools.nvim",
+        dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+        opts = {},
+        config = function()
+            local mason_tsserver = vim.fn.stdpath("data")
+            .. "/mason/packages/typescript-language-server/node_modules/typescript/lib/tsserver.js"
 
-        require("typescript-tools").setup({
-            settings = {
-                separate_diagnostic_server = true,
-                publish_diagnostic_on = "insert_leave",
-                expose_as_code_action = {},
-                tsserver_path = vim.uv.fs_stat(mason_tsserver) and mason_tsserver or nil,
-                tsserver_plugins = {},
-                tsserver_max_memory = "auto",
-                tsserver_format_options = {},
-                tsserver_file_preferences = {},
-                tsserver_locale = "en",
-                complete_function_calls = false,
-                include_completions_with_insert_text = true,
-                code_lens = "off",
-                disable_member_code_lens = true,
-                jsx_close_tag = {
-                    enable = false,
-                    filetypes = { "javascriptreact", "typescriptreact" },
+            require("typescript-tools").setup({
+                settings = {
+                    separate_diagnostic_server = true,
+                    publish_diagnostic_on = "insert_leave",
+                    expose_as_code_action = {},
+                    tsserver_path = vim.uv.fs_stat(mason_tsserver) and mason_tsserver or nil,
+                    tsserver_plugins = {},
+                    tsserver_max_memory = "auto",
+                    tsserver_format_options = {},
+                    tsserver_file_preferences = {},
+                    tsserver_locale = "en",
+                    complete_function_calls = false,
+                    include_completions_with_insert_text = true,
+                    code_lens = "off",
+                    disable_member_code_lens = true,
+                    jsx_close_tag = {
+                        enable = false,
+                        filetypes = { "javascriptreact", "typescriptreact" },
+                    },
                 },
+            })
+        end
+    },
+    {
+        "folke/lazydev.nvim",
+        ft = "lua",
+        opts = {
+            library = {
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+                {"nvim-dap-ui"}
             },
-        })
-    end
-},
-{
-    "folke/lazydev.nvim",
-    ft = "lua",
-    opts = {
-        library = {
-            { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-            {"nvim-dap-ui"}
-        },
-    }
-},
-{
-    "OXY2DEV/markview.nvim",
-    lazy = false,
-    priority = 1000,
-    config = function()
-        require("markview").setup({})
-    end,
-},
+        }
+    },
+    {
+        "OXY2DEV/markview.nvim",
+        lazy = false,
+        priority = 1000,
+        config = function()
+            require("markview").setup({})
+        end,
+    },
 })
