@@ -138,20 +138,15 @@ require("lazy").setup({
         end
     },
     {
-        "neovim/nvim-lspconfig",
-        dependencies = {
-            'williamboman/mason.nvim',
-            'williamboman/mason-lspconfig.nvim',
-            'j-hui/fidget.nvim',
-        }
-    },
-    {
         'ojroques/vim-oscyank',
         config = function()
             vim.keymap.set('n', '<leader>c', '<Plug>OSCYankOperator')
             vim.keymap.set('n', '<leader>cc', '<leader>c_', {remap = true})
             vim.keymap.set('v', '<leader>c', '<Plug>OSCYankVisual')
         end,
+    },
+    {
+        "tpope/vim-fugitive",
     },
     {
         "pmizio/typescript-tools.nvim",

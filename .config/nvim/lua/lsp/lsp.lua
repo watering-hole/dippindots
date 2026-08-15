@@ -12,6 +12,7 @@ return {
     "williamboman/mason-lspconfig.nvim",
     "hrsh7th/cmp-nvim-lsp",
     "creativenull/efmls-configs-nvim",
+    "j-hui/fidget.nvim",
   },
   event = "BufReadPre",
   config = function()
